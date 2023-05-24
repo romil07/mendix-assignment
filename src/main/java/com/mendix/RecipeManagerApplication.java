@@ -1,10 +1,11 @@
 package com.mendix;
 
-import com.mendix.resources.CategoryResource;
+//import com.mendix.resources.CategoryResource;
 import com.mendix.resources.RecipesResource;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
+import ru.vyarus.dropwizard.guice.GuiceBundle;
 
 public class RecipeManagerApplication extends Application<RecipeManagerConfiguration> {
 
@@ -20,14 +21,18 @@ public class RecipeManagerApplication extends Application<RecipeManagerConfigura
     @Override
     public void initialize(final Bootstrap<RecipeManagerConfiguration> bootstrap) {
         // TODO: application initialization
+        bootstrap.addBundle(GuiceBundle.builder()
+                        .modules(new RecipeModule())
+                .build());
     }
 
     @Override
     public void run(final RecipeManagerConfiguration configuration,
                     final Environment environment) {
         // TODO: implement application
+
         environment.jersey().register(RecipesResource.class);
-        environment.jersey().register(CategoryResource.class);
+        //environment.jersey().register(CategoryResource.class);
     }
 
 }
